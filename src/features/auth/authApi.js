@@ -22,3 +22,7 @@ export const login = async (credentials) => {
     throw new Error(message);
   }
 };
+export const signup = async (data) => {
+  const response = await apiClient.post("/auth/signup", data);
+  return response.data;
+};

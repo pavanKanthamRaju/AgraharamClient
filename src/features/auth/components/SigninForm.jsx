@@ -3,7 +3,7 @@ import React from "react";
 const SigninForm = ({ onSubmit }) => {
   return (
     <div className="w-full max-w-sm">
-    <h1 className="text-2xl font-bold mb-6 text-center text-violet-600">Login</h1>
+    <h1 className="text-2xl font-bold mb-6 text-center text-violet-600">Sign in</h1>
     <form onSubmit={onSubmit} className="flex flex-col space-y-4 x-4">
       <input
         name="identifier"
