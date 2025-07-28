@@ -21,6 +21,7 @@ const {loginUser, redirectPath,  setRedirectPath} = useAuth();
                 setLoggedIn(false)
             }else{
                 setLoggedIn(true)
+                localStorage.setItem("user", JSON.stringify(userData));
                 loginUser(userData)
                 navigate(redirectPath || "/dashboard", { replace: true });
                  setRedirectPath(null);

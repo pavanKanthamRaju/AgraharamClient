@@ -5,7 +5,7 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [redirectPath, setRedirectPath] = useState("/dashboard"); // default
     const loginUser = (userData) => setUser(userData);
-    const logoutUser = () => setUser(null);
+    const logoutUser = () => {setUser(null)};
     useEffect(() => {
         const storedUser = JSON.parse(localStorage.getItem("user"));
         if (storedUser) {
