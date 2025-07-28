@@ -8,6 +8,7 @@ import MainLayout from './layouts/MainLayout';
 import SignUpPage from './features/auth/pages/SignUpPage';
 import ProtectedRoute from './routes/ProtectedRoute';
 import PoojaDetailsPage from './pages/PoojaDetailsPage';
+import CheckoutPage from './pages/CheckoutPage';
 function App() {
   return (
     <BrowserRouter>
@@ -17,6 +18,7 @@ function App() {
       <Route path="/signup" element={<AuthLayout><SignUpPage /></AuthLayout>}/>
       <Route path="/dashboard" element={<MainLayout><DashboardPage /></MainLayout>} />
       <Route path="/pooja/:id" element={<MainLayout> <PoojaDetailsPage /></MainLayout>} />
+      <Route path="/checkout/:id" element={<ProtectedRoute ><MainLayout> <CheckoutPage /></MainLayout></ProtectedRoute>} />
     </Routes>
   </BrowserRouter>
   );

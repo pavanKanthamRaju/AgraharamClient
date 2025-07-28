@@ -32,9 +32,9 @@ const SignUpPage = () => {
     //     <h1 className="text-2xl font-bold mb-6 text-violet-700 text-center">Sign Up</h1>
     //     <SignupForm onSubmit={handleSubmit} />
     //   </div>
-      <div className="flex w-full md:w-1/3 items-center justify-center p-8">
+      <>
       <SignupForm onSubmit={handleSubmit} />
-   </div>
+      </>
     // </div>
   );
 };

@@ -3,7 +3,7 @@ import React from "react";
 const SignupForm = ({ onSubmit }) => {
   return (
     <div className="w-full max-w-sm">
-    <h1 className="text-2xl font-bold mb-6 text-violet-700 text-center">Sign Up</h1>
+    <h1 className="text-2xl font-bold mb-6 text-orange-700 text-center">Sign Up</h1>
     <form onSubmit={onSubmit} className="flex flex-col space-y-4 max-w-md mx-auto">
       <input
         name="name"
@@ -34,7 +34,7 @@ const SignupForm = ({ onSubmit }) => {
       />
       <button
         type="submit"
-        className="bg-green-600 text-white rounded py-2 hover:bg-green-700"
+        className="bg-orange-600 hover:bg-orange-700  text-white rounded py-2"
       >
         Sign Up
       </button>

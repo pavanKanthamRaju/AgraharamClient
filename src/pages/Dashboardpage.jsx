@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { poojas } from "../api/dashboardsApi";
-
+import { motion } from "framer-motion";
 
 const PoojaCard = ({ pooja }) => {
     const navigate = useNavigate();
@@ -38,22 +38,37 @@ const DashboardPage = () => {
   
     return (
         <>
-            <div className="bg-orange-100 mt-2 text-orange-800 overflow-hidden whitespace-nowrap relative">
+            <div className="mt-2 text-orange-800 overflow-hidden whitespace-nowrap relative">
                 <div className="animate-marquee inline-block">
                     📢 New update: Book your pooja today and get a free consultation! &nbsp;&nbsp;&nbsp; 📅 Festival bookings are now open! &nbsp;&nbsp;&nbsp; 🙏 Invite divine blessings with Satyanarayana Pooja!
                 </div>
             </div>
             {/* Header */}
-            <div className="max-w-4xl mx-auto mt-5 text-center mb-10 border border-orange-300 p-6 rounded-xl bg-white shadow-sm">
-                <h2 className="text-2xl font-bold text-orange-700 mb-2">
-                    🙏 Welcome to Divine Pooja Services 🙏
+            {/* <div className="max-w-4xl mx-auto mt-5 text-center mb-10 border bg-gradient-to-r from-orange-500 to-red-500 text-white py-2 rounded-lg text-sm font-medium hover:opacity-90 transition p-6 rounded-xl bg-white shadow-sm">
+                <h2 className="text-2xl font-bold text-white-700 mb-2">
+                    🙏  Welcome to Agraharam 🙏
                 </h2>
-                <p className="text-gray-700 text-sm">
-                    Experience the sacred power of traditional Hindu rituals performed by experienced pandits.
+                <p className="text-white-700 text-sm">
+                where you’ll find all your Pooja services and the best Pandits in one place.
                     <br />
                     Book your pooja today and invite divine blessings into your life.
                 </p>
-            </div>
+            </div> */}
+            <motion.div
+      className="max-w-4xl mx-auto mt-5 text-center mb-10 border bg-gradient-to-r from-orange-500 to-red-500 text-white py-2 rounded-lg text-sm font-medium hover:opacity-90 transition p-6 rounded-xl shadow-sm"
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+    >
+      <h2 className="text-2xl font-bold text-white mb-2">
+        🙏 Welcome to Agraharam 🙏
+      </h2>
+      <p className="text-white text-sm">
+        where you’ll find all your Pooja services and the best Pandits in one place.
+        <br />
+        Book your pooja today and invite divine blessings into your life.
+      </p>
+    </motion.div>
 
             {/* Cards Grid */}
             <div className="max-w-6xl mx-auto grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">

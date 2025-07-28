@@ -5,20 +5,20 @@ const DashboardHeader = () => {
   const navigate = useNavigate();
 
   return (
-     <header className="w-full bg-gray-200 shadow-md px-6 py-4 flex justify-between items-center">
+     <header className="w-full bg-gradient-to-r from-yellow-300 to-red-300 shadow-md px-6 py-4 flex justify-between items-center">
     {/* <header className='bg-gradient-to-r from-purple-900 via-indigo-800 to-purple-800 text-white shadow-2xl relative overflow-hidden'> */}
-      <div className="text-2xl font-bold text-violet-600">
+      <div className="text-2xl font-bold text-orange-600">
         App Logo
       </div>
       <div className="space-x-4">
         <Link to="/login">
-          <button className="text-violet-600 font-medium hover:underline">
+          <button className="text-orange-700 font-medium hover:underline">
             Sign In
           </button>
         </Link>
         
         <button
-          className="bg-violet-600 text-white px-4 py-2 rounded-md hover:bg-violet-700 transition"
+          className="bg-orange-600 hover:bg-orange-700  text-white px-4 py-2 rounded-md transition"
           onClick={() => navigate('/signup')}
         >
           Sign Up

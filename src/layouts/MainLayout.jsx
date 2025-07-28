@@ -1,6 +1,7 @@
 import React from 'react'
 import DashboardHeader from '../components/DashboardHeader'
 import DashboardFooter from '../components/DasboardFooter'
+
 const MainLayout = ({ children }) => {
     return (
         <div className="flex flex-col min-h-screen">
