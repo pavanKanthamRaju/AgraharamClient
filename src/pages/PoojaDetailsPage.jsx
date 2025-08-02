@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getPoojaById } from "../api/dashboardsApi";
+import {useAppContext} from "../context/appContext"
 
 const PoojaDetailsPage = () => {
   const { id } = useParams();
@@ -8,12 +9,18 @@ const PoojaDetailsPage = () => {
   const [pooja, setPooja] = useState(null);
   const [selectedItems, setSelectedItems] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
+  const {orderData, setOrderData, setPoojsSelectedItems} = useAppContext();
 
   useEffect(() => {
     getPoojaById(Number(id)).then((data) => {
       setPooja(data);
     });
   }, [id]);
+  useEffect(() => {
+    if (orderData) {
+      localStorage.setItem("orderData", JSON.stringify(orderData));
+    }
+  }, [orderData]);
 
   const basePrice = pooja?.price
     ? parseInt(pooja.price.replace(/[^0-9]/g, ""), 10)
@@ -42,6 +49,24 @@ const PoojaDetailsPage = () => {
     }
   };
 
+  const getItemTotal = () => {
+    return selectedItems.reduce((total, item) => total + item.price, 0);
+  };
+  
+
+  const handleCheckout = () => {
+    const data = {
+      poojaName: pooja.name,
+      description: pooja.description,
+      price: pooja.price,
+      itemCost: getItemTotal(),
+      totalPrice,
+      items: selectedItems,
+    }
+    setOrderData(data);
+    setPoojsSelectedItems(selectedItems);
+    navigate("/order-review");
+  };
   const itemsPrice = selectedItems.reduce((sum, item) => sum + Number(item.price), 0);
   const totalPrice = basePrice + itemsPrice;
 
@@ -122,8 +147,7 @@ const PoojaDetailsPage = () => {
           {/* Checkout */}
           <div className="mt-6">
             <button
-              onClick={() => navigate(`/checkout/${pooja.id}`,{
-                state: { poojaId: pooja.id }})}
+              onClick={handleCheckout}
               className="bg-orange-600 hover:bg-orange-700 text-white font-medium px-6 py-3 rounded-md w-full transition"
             >
               Proceed to Checkout

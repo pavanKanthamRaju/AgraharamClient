@@ -1,3 +1,4 @@
+import apiClient from "../utils/appClient";
 const poojas = [
     {
         id: 1,
@@ -107,4 +108,15 @@ const poojas = [
 const getPoojaById = async (id) => {
     return poojas.find((pooja) => pooja.id === Number(id));
 };
-export { poojas, getPoojaById }
+ const getPoojas = async()=>{
+    try{
+        const response = await apiClient.get("/poojas");
+        return response.data
+    }catch(error){
+        const message =
+        error.response?.data?.message || error.message || "Something went wrong...";
+      throw new Error(message);
+    }
+    
+}
+export { poojas, getPoojaById, getPoojas }

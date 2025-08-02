@@ -1,16 +1,17 @@
-import React from "react";
+import React,{useState, useEffect} from "react";
 import { useNavigate } from "react-router-dom";
-import { poojas } from "../api/dashboardsApi";
+import { getPoojas } from "../api/dashboardsApi";
 import { motion } from "framer-motion";
 
 const PoojaCard = ({ pooja }) => {
     const navigate = useNavigate();
+
     return (
         <div className="bg-[#fff7ed] border border-orange-100 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition">
             <div className="relative">
-                <img src={pooja.image} alt={pooja.name} className="w-full h-40 object-cover" />
+                <img src={pooja.image_url} alt={pooja.name} className="w-full h-40 object-cover" />
                 <span className="absolute top-2 right-2 bg-orange-500 text-white text-xs font-semibold px-2 py-1 rounded-full shadow-sm">
-                    {pooja.price}
+                ₹{pooja.base_price}
                 </span>
             </div>
             <div className="p-4">
@@ -35,7 +36,22 @@ const PoojaCard = ({ pooja }) => {
 }
 
 const DashboardPage = () => {
-  
+    const [poojas, setPoojas] = useState([]);
+    const [loading, setLoading] = useState(true);
+    useEffect(() => {
+        const fetchPoojas = async () => {
+            try {
+                const data = await getPoojas();
+                setPoojas(data);
+            } catch (error) {
+                console.error("Error fetching poojas:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchPoojas();
+    }, []);
     return (
         <>
             <div className="mt-2 text-orange-800 overflow-hidden whitespace-nowrap relative">
