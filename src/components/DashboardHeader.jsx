@@ -48,6 +48,7 @@ import { useAuth } from '../context/authContext';
 import { FaUserCircle } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
 
+
 const DashboardHeader = () => {
   const navigate = useNavigate();
   const { user, logoutUser } = useAuth();
@@ -93,7 +94,12 @@ const DashboardHeader = () => {
             className="flex items-center space-x-2 text-orange-700 font-medium cursor-pointer"
             onClick={() => setDropdownOpen(!dropdownOpen)}
           >
-            <FaUserCircle className="text-2xl" />
+           
+           {user.user.profile_image ? <img 
+  src={user.user.profile_image}
+  alt="Profile" 
+  className="w-6 h-6 rounded-full"
+/>  : <FaUserCircle className="text-2xl" />}
             <span>{user.user.name || "User"}</span>
           </div>
 

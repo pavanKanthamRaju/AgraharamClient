@@ -10,8 +10,10 @@ import ProtectedRoute from './routes/ProtectedRoute';
 import PoojaDetailsPage from './pages/PoojaDetailsPage';
 import CheckoutPage from './pages/CheckoutPage';
 import OrderReview from './pages/OrderReview';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 function App() {
   return (
+    <GoogleOAuthProvider clientId="624201486661-caq1et7an3otskdrq5ua7dbh4rk9qsdi.apps.googleusercontent.com">
     <BrowserRouter>
     <Routes>
       <Route path="/" element={<Navigate to="/dashboard" />} />
@@ -23,6 +25,7 @@ function App() {
       <Route path="/order-review" element={<ProtectedRoute><MainLayout><OrderReview /></MainLayout></ProtectedRoute>} />    
     </Routes>
   </BrowserRouter>
+  </GoogleOAuthProvider>
   );
 }
 
