@@ -60,7 +60,7 @@ const SigninForm = ({ onSubmit }) => {
       </button>
       <button
   onClick={() => loginWithGoogle()}
-  className="flex items-center justify-center gap-2 border bg-orange-600 rounded-md bg-black py-2 px-4 hover:bg-gray-700 transition-colors"
+  className="flex items-center justify-center gap-2 border bg-black rounded-md bg-black py-2 px-4 hover:bg-gray-700 transition-colors"
 >
   <img src={googleIcon} alt="Google" className="w-5 h-5" />
   <span className="text-gray-700 font-medium text-white">Login with Google</span>
