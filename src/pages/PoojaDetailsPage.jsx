@@ -56,6 +56,7 @@ const PoojaDetailsPage = () => {
 
   const handleCheckout = () => {
     const data = {
+      poojaId:pooja.id,
       poojaName: pooja.name,
       description: pooja.description,
       price: pooja.price,

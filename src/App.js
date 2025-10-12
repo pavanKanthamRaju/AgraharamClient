@@ -10,6 +10,7 @@ import ProtectedRoute from './routes/ProtectedRoute';
 import PoojaDetailsPage from './pages/PoojaDetailsPage';
 import CheckoutPage from './pages/CheckoutPage';
 import OrderReview from './pages/OrderReview';
+import OrdersPage from './pages/OrdersPage'
 import { GoogleOAuthProvider } from '@react-oauth/google';
 function App() {
   return (
@@ -22,7 +23,9 @@ function App() {
       <Route path="/dashboard" element={<MainLayout><DashboardPage /></MainLayout>} />
       <Route path="/pooja/:id" element={<MainLayout> <PoojaDetailsPage /></MainLayout>} />
       <Route path="/checkout/:id" element={<ProtectedRoute ><MainLayout> <CheckoutPage /></MainLayout></ProtectedRoute>} />
-      <Route path="/order-review" element={<ProtectedRoute><MainLayout><OrderReview /></MainLayout></ProtectedRoute>} />    
+      <Route path="/order-review" element={<ProtectedRoute><MainLayout><OrderReview /></MainLayout></ProtectedRoute>} />  
+      <Route path="/orders" element={<ProtectedRoute><MainLayout><OrdersPage /></MainLayout></ProtectedRoute>} />
+  
     </Routes>
   </BrowserRouter>
   </GoogleOAuthProvider>

@@ -4,6 +4,7 @@ import { getPoojas } from "../api/dashboardsApi";
 import { motion } from "framer-motion";
 
 const PoojaCard = ({ pooja }) => {
+
     const navigate = useNavigate();
 
     return (

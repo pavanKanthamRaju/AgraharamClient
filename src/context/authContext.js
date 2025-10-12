@@ -5,6 +5,7 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [redirectPath, setRedirectPath] = useState("/dashboard");
+  const [loading, setLoading] = useState(true);
 
   const loginUser = (userData) => {
     setUser(userData);
@@ -21,10 +22,11 @@ export const AuthProvider = ({ children }) => {
     if (storedUser) {
       setUser(storedUser);
     }
+    setLoading(false);
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, loginUser, logoutUser, redirectPath, setRedirectPath }}>
+    <AuthContext.Provider value={{ user, loginUser, logoutUser, redirectPath, setRedirectPath, loading}}>
       {children}
     </AuthContext.Provider>
   );

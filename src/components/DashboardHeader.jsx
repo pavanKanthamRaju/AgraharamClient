@@ -58,7 +58,8 @@ const DashboardHeader = () => {
   const handleLogout = () => {
     localStorage.removeItem("user");
     logoutUser(); // set context user to null
-    navigate("/login");
+    window.history.pushState({}, document.title, "/");
+    navigate("/login", { replace: true });
   };
 
   const handleOutsideClick = (e) => {
