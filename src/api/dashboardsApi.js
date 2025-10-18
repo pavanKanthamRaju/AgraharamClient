@@ -119,4 +119,55 @@ const getPoojaById = async (id) => {
     }
     
 }
-export { poojas, getPoojaById, getPoojas }
+const createPooja = async (poojaData) => {
+    try {
+      const response = await apiClient.post("/poojas", poojaData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      return response.data;
+    } catch (error) {
+      const message =
+        error.response?.data?.message ||
+        error.message ||
+        "Something went wrong while creating the pooja.";
+      throw new Error(message);
+    }
+  };
+  
+  // Update Pooja (JSON payload)
+  const updatePooja = async (id, poojaData) => {
+    if (!id) throw new Error("Pooja ID is required for update");
+  
+    try {
+      const response = await apiClient.put(`/poojas/${id}`, poojaData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      return response.data;
+    } catch (error) {
+      const message =
+        error.response?.data?.message ||
+        error.message ||
+        "Something went wrong while updating the pooja.";
+      throw new Error(message);
+    }
+  };
+  const getAllOrders = async (id, poojaData) => {
+  
+  
+    try {
+      const response = await apiClient.get("/orders/getallOrders");
+      return response.data;
+    } catch (error) {
+      const message =
+        error.response?.data?.message ||
+        error.message ||
+        "Something went wrong while updating the pooja.";
+      throw new Error(message);
+    }
+  };
+  
+export { poojas, getPoojaById, getPoojas,createPooja,updatePooja,getAllOrders }

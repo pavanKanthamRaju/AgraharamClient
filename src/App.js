@@ -10,7 +10,9 @@ import ProtectedRoute from './routes/ProtectedRoute';
 import PoojaDetailsPage from './pages/PoojaDetailsPage';
 import CheckoutPage from './pages/CheckoutPage';
 import OrderReview from './pages/OrderReview';
-import OrdersPage from './pages/OrdersPage'
+import OrdersPage from './pages/OrdersPage';
+import AdminRoute from './routes/AdminRoute';
+import AdminMainLayout from './layouts/AdminMainLayout';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 function App() {
   return (
@@ -25,6 +27,8 @@ function App() {
       <Route path="/checkout/:id" element={<ProtectedRoute ><MainLayout> <CheckoutPage /></MainLayout></ProtectedRoute>} />
       <Route path="/order-review" element={<ProtectedRoute><MainLayout><OrderReview /></MainLayout></ProtectedRoute>} />  
       <Route path="/orders" element={<ProtectedRoute><MainLayout><OrdersPage /></MainLayout></ProtectedRoute>} />
+      <Route path="/admin/*" element={<AdminRoute><AdminMainLayout /></AdminRoute>} />
+  
   
     </Routes>
   </BrowserRouter>

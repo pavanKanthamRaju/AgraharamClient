@@ -23,9 +23,15 @@ const {loginUser, redirectPath,  setRedirectPath} = useAuth();
                 setLoggedIn(true)
                 localStorage.setItem("user", JSON.stringify(userData));
                 loginUser(userData)
+                // Redirect based on role
                 debugger
+            if (userData.user.isadmin) {
+                navigate("/admin/orders", { replace: true });
+            } else {
                 navigate("/dashboard", { replace: true });
-                 setRedirectPath(null);
+            }
+
+            setRedirectPath(null);
             }
         }catch(err){
             console.error("Login failed:", err.message);

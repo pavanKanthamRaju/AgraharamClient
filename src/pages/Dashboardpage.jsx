@@ -37,6 +37,7 @@ const PoojaCard = ({ pooja }) => {
 }
 
 const DashboardPage = () => {
+
     const [poojas, setPoojas] = useState([]);
     const [loading, setLoading] = useState(true);
     useEffect(() => {
