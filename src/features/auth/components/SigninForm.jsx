@@ -38,7 +38,7 @@ const SigninForm = ({ onSubmit }) => {
   });
   return (
     <div className="w-full max-w-sm">
-    <h1 className="text-2xl font-bold mb-6 text-center text-orange-600">Singn in</h1>
+    <h1 className="text-2xl font-bold mb-6 text-center text-orange-600">Sign in</h1>
     <form onSubmit={onSubmit} className="flex flex-col space-y-4 x-4">
       <input
         name="identifier"
