@@ -24,17 +24,18 @@ const OrdersPage = () => {
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-semibold mb-6">All Orders</h1>
+      <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 text-center sm:text-left mb-8">All Orders</h1>
 
       {orders.length === 0 ? (
         <p>No orders found.</p>
       ) : (
         <div className="overflow-x-auto">
-          <table className="min-w-full border border-gray-300">
-            <thead className="bg-gray-100">
+          <table className="min-w-full border border-gray-300 rounded-lg">
+            <thead className=" bg-gradient-to-r from-orange-300 to-orange-400">
               <tr>
                 <th className="p-2 border">Order ID</th>
-                <th className="p-2 border">User ID</th>
+                <th className="p-2 border">User Name</th>
+                <th className="p-2 border">Pooja</th>
                 <th className="p-2 border">Total</th>
                 <th className="p-2 border">Status</th>
                 <th className="p-2 border">Address</th>
@@ -45,7 +46,8 @@ const OrdersPage = () => {
               {orders.map((order) => (
                 <tr key={order.order_id} className="hover:bg-gray-50">
                   <td className="p-2 border">{order.order_id}</td>
-                  <td className="p-2 border">{order.user_id}</td>
+                  <td className="p-2 border">{order.user_name}</td>
+                  <td className="p-2 border">{order.pooja_name}</td>
                   <td className="p-2 border">₹{order.total_amount / 100}</td>
                   <td className="p-2 border text-green-700 font-medium">{order.payment_status}</td>
                   <td className="p-2 border text-green-700 font-medium">{order.address}</td>

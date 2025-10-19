@@ -169,5 +169,65 @@ const createPooja = async (poojaData) => {
       throw new Error(message);
     }
   };
+
+  const createItem = async (itemData) => {
+    try {
+      const response = await apiClient.post("/items", itemData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      return response.data;
+    } catch (error) {
+      const message =
+        error.response?.data?.message ||
+        error.message ||
+        "Something went wrong while creating the pooja.";
+      throw new Error(message);
+    }
+  };
+  const updateItem = async (itemId, itemData) => {
+    try {
+      const response = await apiClient.put(`/items/${itemId}`, itemData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      return response.data;
+    } catch (error) {
+      const message =
+        error.response?.data?.message ||
+        error.message ||
+        "Something went wrong while updating the item.";
+      throw new Error(message);
+    }
+  };
   
-export { poojas, getPoojaById, getPoojas,createPooja,updatePooja,getAllOrders }
+  const getAllItems = async (id, poojaData) => {
+    try {
+      const response = await apiClient.get("/items");
+      return response.data;
+    } catch (error) {
+      const message =
+        error.response?.data?.message ||
+        error.message ||
+        "Something went wrong while updating the pooja.";
+      throw new Error(message);
+    }
+  };
+  const deleteItem = async (itemId) => {
+    try {
+      const response = await apiClient.delete(`/items/${itemId}`);
+      return response.data;
+    } catch (error) {
+      const message =
+        error.response?.data?.message ||
+        error.message ||
+        "Something went wrong while deleting the item.";
+      throw new Error(message);
+    }
+  };
+  
+ 
+  
+export { poojas, getPoojaById, getPoojas,createPooja,updatePooja,getAllOrders, createItem,updateItem,deleteItem,getAllItems }

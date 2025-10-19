@@ -4,7 +4,7 @@ import { Routes, Route, Navigate, Link } from "react-router-dom";
 import DashboardHeader from "../components/DashboardHeader";
 import DashboardFooter from "../components/DasboardFooter";
 import Poojas from "../pages/admin/Poojas";
-import PoojaItems from "../pages/admin/PoojaItems";
+import ItemsPaage from "../pages/admin/ItemsPaage";
 import OrdersPage from "../pages/admin/OrdersPage";
 import { Menu } from "lucide-react";
 
@@ -59,11 +59,11 @@ const AdminMainLayout = () => {
               Poojas
             </Link>
             <Link
-              to="/admin/poojaItems"
+              to="/admin/items"
               className="text-white font-medium px-3 py-2 rounded hover:bg-blue-50 hover:text-blue-600"
               onClick={() => setSidebarOpen(false)}
             >
-              Pooja Items
+              Items
             </Link>
           </nav>
         </aside>
@@ -74,7 +74,7 @@ const AdminMainLayout = () => {
             <Route path="" element={<Navigate to="orders" replace />} />
             <Route path="orders" element={<OrdersPage />} />
             <Route path="poojas" element={<Poojas />} />
-            <Route path="poojaItems" element={<PoojaItems />} />
+            <Route path="items" element={<ItemsPaage />} />
      
             
             PoojaItems
