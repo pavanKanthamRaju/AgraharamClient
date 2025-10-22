@@ -8,6 +8,7 @@ import { useAuth } from "../../../context/authContext";
 import googleIcon from '../../../assets/google-icon.png'
 
 const SigninForm = ({ onSubmit }) => {
+  const base_path = process.env.REACT_APP_BASE_URL;
   const navigate =useNavigate();
   const {loginUser, redirectPath,  setRedirectPath} = useAuth();
   const loginWithGoogle = useGoogleLogin({
@@ -21,7 +22,7 @@ const SigninForm = ({ onSubmit }) => {
         console.log("userData "+res.data)
         debugger
         const user = await axios.post(
-          "http://localhost:5080/api/auth/google-login",
+          `${base_path}/api/auth/google-login`,
           { userInfo: res.data }
         );
 

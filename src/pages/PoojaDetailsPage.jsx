@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getPoojaById } from "../api/dashboardsApi";
+import { getPoojaById, getPoojaItemsByid } from "../api/dashboardsApi";
 import {useAppContext} from "../context/appContext"
 
 const PoojaDetailsPage = () => {
@@ -8,25 +8,37 @@ const PoojaDetailsPage = () => {
   const navigate = useNavigate();
   const [pooja, setPooja] = useState(null);
   const [selectedItems, setSelectedItems] = useState([]);
+  const [poojaItems, setPoojaItems] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
   const {orderData, setOrderData, setPoojsSelectedItems} = useAppContext();
 
   useEffect(() => {
-    getPoojaById(Number(id)).then((data) => {
-      setPooja(data);
-    });
+    const fetchData = async () => {
+      try {
+
+        const poojaData = await getPoojaById(Number(id));
+        setPooja(poojaData);
+
+        // Once we have pooja ID, fetch its items
+        const itemsData = await getPoojaItemsByid(Number(id));
+        setPoojaItems(itemsData);
+      } catch (error) {
+        console.error("Error fetching pooja details or items:", error);
+      }
+    };
+
+    fetchData();
   }, [id]);
   useEffect(() => {
     if (orderData) {
       localStorage.setItem("orderData", JSON.stringify(orderData));
     }
   }, [orderData]);
-
-  const basePrice = pooja?.price
-    ? parseInt(pooja.price.replace(/[^0-9]/g, ""), 10)
+debugger
+  const basePrice = Number(pooja?.base_price)
+    ? parseFloat(pooja.base_price.replace(/[^0-9.]/g, ""))
     : 0;
 
-  const items = pooja?.items || [];
 
   const handleToggleItem = (item) => {
     setSelectedItems((prev) => {
@@ -34,7 +46,7 @@ const PoojaDetailsPage = () => {
       const updated = exists
         ? prev.filter((i) => i.name !== item.name)
         : [...prev, item];
-      setSelectAll(updated.length === items.length);
+      setSelectAll(updated.length === poojaItems.length);
       return updated;
     });
   };
@@ -44,7 +56,7 @@ const PoojaDetailsPage = () => {
       setSelectedItems([]);
       setSelectAll(false);
     } else {
-      setSelectedItems(items);
+      setSelectedItems(poojaItems);
       setSelectAll(true);
     }
   };
@@ -59,7 +71,7 @@ const PoojaDetailsPage = () => {
       poojaId:pooja.id,
       poojaName: pooja.name,
       description: pooja.description,
-      price: pooja.price,
+      price: pooja.base_price,
       itemCost: getItemTotal(),
       totalPrice,
       items: selectedItems,
@@ -68,6 +80,7 @@ const PoojaDetailsPage = () => {
     setPoojsSelectedItems(selectedItems);
     navigate("/order-review");
   };
+  debugger
   const itemsPrice = selectedItems.reduce((sum, item) => sum + Number(item.price), 0);
   const totalPrice = basePrice + itemsPrice;
 
@@ -86,7 +99,7 @@ const PoojaDetailsPage = () => {
         {/* Image */}
         <div className="md:w-1/2">
           <img
-            src={pooja.image}
+            src={pooja.image_url}
             alt={pooja.name}
             className="h-full w-full object-contains"
           />
@@ -122,7 +135,7 @@ const PoojaDetailsPage = () => {
 
               {/* Item List */}
               <ul className="space-y-2">
-                {items.map((item, idx) => (
+                {poojaItems.map((item, idx) => (
                   <li key={idx} className="flex items-center gap-2">
                     <input
                       type="checkbox"

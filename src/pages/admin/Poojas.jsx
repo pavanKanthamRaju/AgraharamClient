@@ -1,13 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { getPoojas,createPooja,updatePooja } from "../../api/dashboardsApi";
 import CreatePoojaForm from "./components/CreatePoojaForm";
+import PoojaItemsForm from "./components/poojaItemsForm";
+import Modal from "./components/Modal";
 
 
 const Poojas = () => {
   const [poojas, setPoojas] = useState([]);
   const [showDialog, setShowDialog] = useState(false);
+  const [showPoojaItemDialog, setpoojaItemsDialog] = useState(false);
   const [selectedPooja, setSelectedPooja] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const closeModal = () => {
+  
+    setIsModalOpen(false);
+       setSelectedPooja(null);
+  };
   useEffect(() => {
     const getPoojasData = async () => {
       const poojasData = await getPoojas();
@@ -19,16 +28,23 @@ const Poojas = () => {
   const handleCreate = () => {
     setSelectedPooja(null);
     setShowDialog(true);
+    setIsModalOpen(true);
   };
 
   const handleEdit = (pooja) => {
     setSelectedPooja(pooja);
     setShowDialog(true);
   };
+  const handlePoojaItems = (pooja)=>{
+    setSelectedPooja(pooja)
+    setIsModalOpen(true);
+    setpoojaItemsDialog(true);
+  }
 
   const handleClose = () => {
     setShowDialog(false);
     setSelectedPooja(null);
+    setpoojaItemsDialog(false);
   };
 
   const handleSave = async (poojaData) => {
@@ -93,16 +109,23 @@ const Poojas = () => {
             </div>
 
             {/* Card Footer */}
-            <div className="flex justify-between items-center  px-4 py-3 border-t bg-gray-700">
+            <div className="flex justify-between flex-col sm:flex-row items-center gap-2  px-4 py-3 border-t bg-gray-700">
               <button
                 onClick={() => handleEdit(pooja)}
-                className="relative overflow-hidden px-4 py-2 rounded-md bg-blue-500 text-white text-sm font-medium shadow-sm hover:bg-blue-600 active:scale-95 transition"
+                className="w-full sm:w-auto overflow-hidden  px-4 py-2 rounded-md bg-blue-500 text-white text-sm font-medium shadow-sm hover:bg-blue-600 active:scale-95 transition"
               >
                 Edit
               </button>
               <button
+    className="w-full sm:w-auto overflow-hidden px-4 py-2 rounded-md bg-orange-500 text-white text-sm font-medium shadow-sm hover:bg-orange-600 active:scale-95 transition"
+    onClick={() => handlePoojaItems(pooja)}
+    
+  >
+    Update Pooja Items
+  </button>
+              <button
                 onClick={() => console.log('Delete', pooja.id)}
-                className="relative overflow-hidden px-4 py-2 rounded-md bg-red-500 text-white text-sm font-medium shadow-sm hover:bg-red-600 active:scale-95 transition"
+                className="w-full sm:w-auto overflow-hidden px-4 py-2 rounded-md bg-red-500 text-white text-sm font-medium shadow-sm hover:bg-red-600 active:scale-95 transition"
               >
                 Delete
               </button>
@@ -118,6 +141,16 @@ const Poojas = () => {
           onClose={handleClose}
           onSave={handleSave}
         />
+      )}
+       {showPoojaItemDialog && (
+      <Modal
+      isOpen={isModalOpen}
+      onClose={closeModal}
+      title={`Update Pooja Items - ${selectedPooja? selectedPooja.name : ""}`}
+    >
+      <PoojaItemsForm pooja={selectedPooja} onClose={closeModal} />
+    </Modal>
+      
       )}
     </div>
   );

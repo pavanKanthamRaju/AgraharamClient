@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import ItemForm from "./components/ItemForm"
 
 const PoojaItems = () => {
+  const base_path = process.env.REACT_APP_BASE_URL;
   const [items, setItems] = useState([]);
   const [selectedPooja, setSelectedPooja] = useState("");
   const [poojas, setPoojas] = useState([]);
@@ -14,15 +15,15 @@ const PoojaItems = () => {
   }, []);
 
   const fetchPoojas = async () => {
-    const res = await fetch("http://localhost:5000/api/poojas");
+    const res = await fetch(`${base_path}/api/poojas`);
     const data = await res.json();
     setPoojas(data);
   };
 
   const fetchItems = async (poojaId = "") => {
     const url = poojaId
-      ? `http://localhost:5000/api/items/pooja/${poojaId}`
-      : "http://localhost:5000/api/items";
+      ? `${base_path}/api/items/pooja/${poojaId}`
+      : `${base_path}/api/items`;
     const res = await fetch(url);
     const data = await res.json();
     setItems(data);
@@ -42,14 +43,14 @@ const PoojaItems = () => {
   const handleSave = async (newItem) => {
     if (editingItem) {
       // Update item
-      await fetch(`http://localhost:5000/api/items/${editingItem.id}`, {
+      await fetch(`${base_path}/api/items/${editingItem.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newItem),
       });
     } else {
       // Create item
-      await fetch("http://localhost:5000/api/items", {
+      await fetch(`$base_path}/api/items`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newItem),
