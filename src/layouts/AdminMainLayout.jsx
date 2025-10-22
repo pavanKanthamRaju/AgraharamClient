@@ -9,6 +9,7 @@ import OrdersPage from "../pages/admin/OrdersPage";
 import { Menu } from "lucide-react";
 
 const AdminMainLayout = () => {
+  debugger
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
@@ -78,7 +79,7 @@ const AdminMainLayout = () => {
      
             
             PoojaItems
-            <Route path="*" element={<Navigate to="dashboard" replace />} />
+            <Route path="*" element={<Navigate to="orders" replace />} />
           </Routes>
         </main>
       </div>

@@ -5,12 +5,12 @@ const OrdersPage = () => {
   const [orders, setOrders] = useState([]);
   const storedUser = localStorage.getItem("user");
   const user = storedUser ? JSON.parse(storedUser).user : null;
-
+const userId = user?.id;
   useEffect(() => {
     if (user?.id) {
       fetchOrders();
     }
-  }, [user]);
+  }, [userId]);
 
   const fetchOrders = async () => {
     try {

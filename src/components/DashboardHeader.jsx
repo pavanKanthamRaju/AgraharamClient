@@ -55,7 +55,8 @@ const DashboardHeader = () => {
   const { user, logoutUser } = useAuth();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
-
+const logoNavigation = user? user.user.isadmin? "/admin/orders" : "/dashboard" : ""
+debugger
   const handleLogout = () => {
     localStorage.removeItem("user");
     logoutUser(); // set context user to null
@@ -76,12 +77,13 @@ const DashboardHeader = () => {
 
   return (
     <header className="w-full bg-gradient-to-r from-yellow-300 to-red-300 shadow-md px-1 flex justify-between items-center">
+  <Link to={logoNavigation}>
   <img 
     src={mainLogo} 
     alt="Logo"
     className="h-16 md:h-20 w-auto"
   />
-
+</Link>
   {!user ? (
     <div className="space-x-4">
       <Link to="/login">

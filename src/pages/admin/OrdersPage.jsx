@@ -39,6 +39,7 @@ const OrdersPage = () => {
                 <th className="p-2 border">Total</th>
                 <th className="p-2 border">Status</th>
                 <th className="p-2 border">Address</th>
+                <th className="p-2 border">Phone Number</th>
                 <th className="p-2 border">Created At</th>
               </tr>
             </thead>
@@ -51,13 +52,7 @@ const OrdersPage = () => {
                   <td className="p-2 border">₹{order.total_amount / 100}</td>
                   <td className="p-2 border text-green-700 font-medium">{order.payment_status}</td>
                   <td className="p-2 border text-green-700 font-medium">{order.address}</td>
-                  {/* <td className="p-2 border">
-                    {order.order_items?.map((item, i) => (
-                      <div key={i}>
-                        Item #{item.item_id} — {item.quantity} × ₹{item.price}
-                      </div>
-                    ))} 
-                  </td>*/}
+                  <td className="p-2 border text-green-700 font-medium">{order.phone_number}</td>
                   <td className="p-2 border">
                     {new Date(order.created_at).toLocaleString()}
                   </td>
