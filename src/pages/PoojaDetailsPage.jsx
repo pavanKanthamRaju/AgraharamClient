@@ -97,7 +97,7 @@ debugger
       <div className="max-w-5xl mx-auto bg-white shadow-md rounded-xl overflow-hidden flex flex-col md:flex-row">
 
         {/* Image */}
-        <div className="md:w-1/2">
+        <div className="sm:w-1/2 h-[75vh]">
           <img
             src={pooja.image_url}
             alt={pooja.name}
