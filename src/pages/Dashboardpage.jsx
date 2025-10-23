@@ -109,8 +109,8 @@ const DashboardPage = () => {
     <>
       {/* 🔸 Scrolling Banner */}
       {bannerAnnouncement && (
-        <div className="mt-2 text-orange-800 overflow-hidden whitespace-nowrap relative bg-orange-50 py-2 border-b border-orange-100">
-          <div className="animate-marquee inline-block font-medium">
+        <div className="mt-2 text-orange-800 overflow-hidden whitespace-nowrap relative">
+          <div className="animate-marquee inline-block">
             {bannerAnnouncement.description}
           </div>
         </div>
