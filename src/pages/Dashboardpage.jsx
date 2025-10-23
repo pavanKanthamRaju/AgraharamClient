@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getPoojas } from "../api/dashboardsApi";
+import { getPoojas, getAnnouncements } from "../api/dashboardsApi";
 import { motion } from "framer-motion";
 
 const Spinner = () => (
@@ -55,7 +55,12 @@ const PoojaCard = ({ pooja }) => {
 
 const DashboardPage = () => {
   const [poojas, setPoojas] = useState([]);
+  const [announcements, setAnnouncements] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  // Separate local loading control
+  const [poojaLoading, setPoojaLoading] = useState(true);
+  const [announcementLoading, setAnnouncementLoading] = useState(true);
 
   useEffect(() => {
     const fetchPoojas = async () => {
@@ -65,43 +70,67 @@ const DashboardPage = () => {
       } catch (error) {
         console.error("Error fetching poojas:", error);
       } finally {
-        setLoading(false);
+        setPoojaLoading(false);
       }
     };
+
+    const fetchAnnouncements = async () => {
+      try {
+        const data = await getAnnouncements();
+        setAnnouncements(data);
+      } catch (error) {
+        console.error("Error fetching announcements:", error);
+      } finally {
+        setAnnouncementLoading(false);
+      }
+    };
+
     fetchPoojas();
+    fetchAnnouncements();
   }, []);
+
+  // Combined loading state
+  useEffect(() => {
+    if (!poojaLoading && !announcementLoading) {
+      setLoading(false);
+    }
+  }, [poojaLoading, announcementLoading]);
 
   if (loading) return <Spinner />;
 
+  // Separate announcement types
+  const bannerAnnouncement = announcements.find(a => a.name === "Scrolling Banner");
+  const popupAnnouncementHeaderText= announcements.find(a => a.name === "Header text");
+  const popupAnnouncementHeading= announcements.find(a => a.name === "Header Heading ");
+  const popupAnnouncementSubHeading = announcements.find(a => a.name === "Header Sub Heading");
+  debugger
+
   return (
     <>
-      <div className="mt-2 text-orange-800 overflow-hidden whitespace-nowrap relative">
-        <div className="animate-marquee inline-block">
-          📢 New update: Book your pooja today and get a free consultation!
-          &nbsp;&nbsp;&nbsp; 📅 Festival bookings are now open!
-          &nbsp;&nbsp;&nbsp; 🙏 Invite divine blessings with Satyanarayana
-          Pooja!
+      {/* 🔸 Scrolling Banner */}
+      {bannerAnnouncement && (
+        <div className="mt-2 text-orange-800 overflow-hidden whitespace-nowrap relative bg-orange-50 py-2 border-b border-orange-100">
+          <div className="animate-marquee inline-block font-medium">
+            {bannerAnnouncement.description}
+          </div>
         </div>
-      </div>
+      )}
 
-      <motion.div
-        className="max-w-4xl mx-auto mt-5 text-center mb-10 border bg-gradient-to-r from-orange-500 to-red-500 text-white py-2 rounded-lg text-sm font-medium hover:opacity-90 transition p-6 rounded-xl shadow-sm"
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-      >
-        <h2 className="text-2xl font-bold text-white mb-2">
-          🙏 Welcome to Agraharam 🙏
-        </h2>
-        <p className="text-white text-sm">
-          where you’ll find all your Pooja services and the best Pandits in one
-          place.
-          <br />
-          Book your pooja today and invite divine blessings into your life.
-        </p>
-      </motion.div>
+      {/* 🔸 Popup/Header Notice */}
+      {popupAnnouncementHeaderText && (
+        <motion.div
+          className="max-w-4xl mx-auto mt-5 text-center mb-10 border bg-gradient-to-r from-orange-500 to-red-500 text-white py-2 rounded-lg text-sm font-medium shadow-sm p-6"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
+         
 
-      {/* Cards Grid */}
+          <h2 className="text-2xl font-bold text-white mb-2"> {popupAnnouncementHeaderText.description}</h2> <p className="text-white text-sm"> {popupAnnouncementHeading.description} <br /> {popupAnnouncementSubHeading.description} </p>
+        </motion.div>
+      )}
+
+      {/* 🔸 Pooja Cards Grid */}
       <div className="max-w-6xl mx-auto grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
         {poojas.map((pooja) => (
           <PoojaCard key={pooja.id} pooja={pooja} />

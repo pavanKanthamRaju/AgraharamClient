@@ -6,6 +6,7 @@ import DashboardFooter from "../components/DasboardFooter";
 import Poojas from "../pages/admin/Poojas";
 import ItemsPaage from "../pages/admin/ItemsPaage";
 import OrdersPage from "../pages/admin/OrdersPage";
+import AnnouncementsPage from "../pages/admin/AnnouncementsPage"
 import { Menu } from "lucide-react";
 
 const AdminMainLayout = () => {
@@ -66,6 +67,13 @@ const AdminMainLayout = () => {
             >
               Items
             </Link>
+            <Link
+              to="/admin/announcements"
+              className="text-white font-medium px-3 py-2 rounded hover:bg-blue-50 hover:text-blue-600"
+              onClick={() => setSidebarOpen(false)}
+            >
+              Announcements
+            </Link>
           </nav>
         </aside>
 
@@ -76,6 +84,8 @@ const AdminMainLayout = () => {
             <Route path="orders" element={<OrdersPage />} />
             <Route path="poojas" element={<Poojas />} />
             <Route path="items" element={<ItemsPaage />} />
+            <Route path="announcements" element={<AnnouncementsPage />} />
+            
      
             
             PoojaItems

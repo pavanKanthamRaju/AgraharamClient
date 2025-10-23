@@ -165,8 +165,26 @@ const createPooja = async (poojaData) => {
       throw new Error(message);
     }
   };
-
+   const getAnnouncements = async () => {
+    const res = await apiClient.get("/announcements");
+    return res.data.data;
+  };
+  
+   const createAnnouncement = async (data) => {
+    const res = await apiClient.post("/announcements", data);
+    return res.data.data;
+  };
+  
+   const updateAnnouncement = async (id, data) => {
+    const res = await apiClient.put(`/announcements/${id}`, data);
+    return res.data.data;
+  };
+  
+   const deleteAnnouncement = async (id) => {
+    const res = await apiClient.delete(`/announcements/${id}`);
+    return res.data;
+  };
   
  
   
-export { poojas, getPoojaById, getPoojas,createPooja,updatePooja,getAllOrders, createItem,updateItem,deleteItem,getAllItems,getPoojaItemsByid, addPoojaItem, deletePoojaItem }
+export { poojas, getPoojaById, getPoojas,createPooja,updatePooja,getAllOrders, createItem,updateItem,deleteItem,getAllItems,getPoojaItemsByid, addPoojaItem, deletePoojaItem,getAnnouncements, createAnnouncement, updateAnnouncement, deleteAnnouncement}
