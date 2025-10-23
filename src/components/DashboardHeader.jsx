@@ -75,7 +75,7 @@ debugger
         ) : (
           <FaUserCircle className="text-2xl" />
         )}
-        <span>{user.user.name || "User"}</span>
+        <span className="text-[#a20e05]">{user.user.name || "User"}</span>
       </div>
 
       {dropdownOpen && (

@@ -110,7 +110,27 @@ const DashboardPage = () => {
       {/* 🔸 Scrolling Banner */}
       {bannerAnnouncement && (
         <div className="mt-2 text-orange-800 overflow-hidden whitespace-nowrap relative">
-          <div className="animate-marquee inline-block">
+               <style>
+        {`
+          @keyframes marquee {
+            0% {
+              transform: translateX(100%);
+            }
+            100% {
+              transform: translateX(-100%);
+            }
+          }
+          .animate-marquee-slow {
+            display: inline-block;
+            white-space: nowrap;
+            animation: marquee 30s linear infinite; /* adjust speed here */
+          }
+          .animate-marquee-slow:hover {
+            animation-play-state: paused; /* optional: pause on hover */
+          }
+        `}
+      </style>
+          <div className="animate-marquee-slow { inline-block">
             {bannerAnnouncement.description}
           </div>
         </div>
