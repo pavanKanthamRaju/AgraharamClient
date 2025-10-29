@@ -33,7 +33,7 @@ const DashboardHeader = () => {
   }, []);
 
   return (
-    <header className="w-full bg-gradient-to-r from-yellow-300 to-red-300 shadow-md px-4 py-1 flex items-center justify-between relative">
+    <header className="w-full bg-gradient-to-r from-yellow-300 to-red-300 shadow-md px-4 py-1 flex items-center justify-between fixed top-0 z-50 h-[89px]">
       
       {/* --- LEFT: Logo --- */}
       <div className="flex-shrink-0">
