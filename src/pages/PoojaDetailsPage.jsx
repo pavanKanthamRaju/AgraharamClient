@@ -61,8 +61,23 @@ debugger
     }
   };
 
+  // const getItemTotal = () => {
+  //   return selectedItems.reduce((total, item) => total + item.price, 0);
+  // };
+
   const getItemTotal = () => {
-    return selectedItems.reduce((total, item) => total + item.price, 0);
+    return selectedItems.reduce((total, item) => {
+      // Use parseFloat to convert the item.price string into a number
+      const priceAsNumber = parseFloat(item.price);
+      
+      // Check if the conversion resulted in a valid number (not NaN)
+      if (!isNaN(priceAsNumber)) {
+        return total + priceAsNumber;
+      }
+      
+      // If the price is invalid, just return the current total
+      return total;
+    }, 0);
   };
   
 

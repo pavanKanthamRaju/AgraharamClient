@@ -1,11 +1,14 @@
 import React from "react";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from "axios";
 import { useGoogleLogin } from '@react-oauth/google';
 import { useAuth } from "../../../context/authContext";
 import googleIcon from '../../../assets/google-icon.png'
+import agraharam_text_img from "../../../assets/agraharam_text_img.png"
+import { Anchor } from "lucide-react";
+
 
 const SigninForm = ({ onSubmit }) => {
   const base_path = process.env.REACT_APP_BASE_URL;
@@ -39,6 +42,7 @@ const SigninForm = ({ onSubmit }) => {
   });
   return (
     <div className="w-full max-w-sm">
+      {/* <img src={agraharam_text_img} /> */}
     <h1 className="text-2xl font-bold mb-6 text-center text-orange-600">Sign in</h1>
     <form onSubmit={onSubmit} className="flex flex-col space-y-4 x-4">
       <input
@@ -54,6 +58,12 @@ const SigninForm = ({ onSubmit }) => {
         required
         className="border rounded px-5 py-2"
       />
+
+<div className="flex justify-end w-full">
+<Link to="/signup" className="text-orange-600 hover:underline">
+  Sign  up
+</Link>
+</div>
       <button
         type="submit"
         className="bg-orange-600 hover:bg-orange-700  text-white rounded py-2"

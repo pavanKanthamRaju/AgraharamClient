@@ -112,6 +112,22 @@ const OrderReviewPage = () => {
       </div>
     );
   }
+  
+  const getMinDate = () => {
+    // 1. Get today's date
+    const today = new Date();
+    
+    // 2. Add two days (2 days * 24 hours/day * 60 min/hour * 60 sec/min * 1000 ms/sec)
+    //    We use setDate to reliably add days across month boundaries.
+    today.setDate(today.getDate() + 2);
+
+    // 3. Format the date as 'YYYY-MM-DD' required by the input min attribute
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+    const day = String(today.getDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
+  };
 
   return (
     <div className="relative min-h-screen bg-[#fffaf0] p-6">
@@ -145,6 +161,7 @@ const OrderReviewPage = () => {
 
         <div className="mb-4">
           <p className="text-lg font-medium">Item Total: ₹{orderData.itemCost}</p>
+          <p className="text-lg font-medium">Pooja Price: ₹{parseFloat(orderData.price)}</p>
           <p className="text-lg font-bold">Total Price: ₹{orderData.totalPrice}</p>
         </div>
 
@@ -197,13 +214,24 @@ const OrderReviewPage = () => {
         {/* Date & Time */}
         <div className="flex flex-col md:flex-row gap-4 mb-6">
           <div className="flex-1">
-            <label className="block mb-1 font-medium text-gray-700">Pooja Date</label>
-            <input
+            <label className="block mb-1 font-medium text-gray-700">Pooja Date </label>
+            {/* <input
               type="date"
               value={poojaDate}
               onChange={(e) => setPoojaDate(e.target.value)}
               className="w-full border rounded-md p-2"
-            />
+            /> */}
+            <input
+        id="pooja-date"
+        type="date"
+        value={poojaDate}
+        onChange={(e) => setPoojaDate(e.target.value)}
+        className="w-full border rounded-md p-2"
+        // --- KEY FIX: Set the minimum date dynamically ---
+        min={getMinDate()}
+      />
+<p className="mt-2 text-sm text-green-600">(Must be selected after two days from today)</p>
+
           </div>
 
           <div className="flex-1">
@@ -213,6 +241,7 @@ const OrderReviewPage = () => {
               value={poojaTime}
               onChange={(e) => setPoojaTime(e.target.value)}
               className="w-full border rounded-md p-2"
+              min={getMinDate()}
             />
           </div>
         </div>
