@@ -11,7 +11,7 @@ const MainLayout = ({ children }) => {
             </header> */}
            
             <DashboardHeader  />
-            <main className="flex-1 bg-[#fff3e0]">{children}</main>
+            <main className="flex-1 bg-[#fff3e0] pt-[89px] pb-[65px]">{children}</main>
             <DashboardFooter />
           
         </div>
