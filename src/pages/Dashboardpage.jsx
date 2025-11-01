@@ -23,7 +23,7 @@ const PoojaCard = ({ pooja }) => {
         <img
           src={pooja.image_url}
           alt={pooja.name}
-          className="w-full h-40 object-cover"
+          className="w-full h-full object-cover max-h-[200px] object-top"
         />
         <span className="absolute top-2 right-2 bg-orange-500 text-white text-xs font-semibold px-2 py-1 rounded-full shadow-sm">
           ₹{pooja.base_price}

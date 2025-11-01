@@ -32,7 +32,7 @@ const AdminMainLayout = () => {
 
         {/* Sidebar */}
         <aside
-          className={`fixed md:static z-40 bg-gray-400 border-r border-gray-200 h-screen md:h-auto md:min-h-full w-64 p-4 transform transition-transform duration-300 ease-in-out
+          className={`fixed md:static z-40 bg-gray-400 border-r border-gray-200 h-[calc(100vh-75px)] w-64 p-4 pt-[89px] pb-[65px] transform transition-transform duration-300 ease-in-out
           ${sidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}`}
         >
           <div className="flex justify-between items-center mb-6 md:hidden">
@@ -78,7 +78,7 @@ const AdminMainLayout = () => {
         </aside>
 
         {/* Main panel */}
-        <main className="flex-1 p-6 overflow-y-auto bg-gray-50 md:h-[calc(100vh-120px)]">
+        <main className="flex-1 p-6 overflow-y-auto bg-gray-50 md:h-[calc(100vh-120px)] pt-[89px] pb-[65px]">
           <Routes>
             <Route path="" element={<Navigate to="orders" replace />} />
             <Route path="orders" element={<OrdersPage />} />
