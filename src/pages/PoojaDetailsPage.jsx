@@ -15,7 +15,7 @@ const PoojaDetailsPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-
+debugger
         const poojaData = await getPoojaById(Number(id));
         setPooja(poojaData);
 
@@ -34,11 +34,13 @@ const PoojaDetailsPage = () => {
       localStorage.setItem("orderData", JSON.stringify(orderData));
     }
   }, [orderData]);
-debugger
-  const basePrice = Number(pooja?.base_price)
-    ? parseFloat(pooja.base_price.replace(/[^0-9.]/g, ""))
-    : 0;
 
+    const poojaPrice = pooja?.base_price;
+
+    // Use a fallback value (like 0) if basePrice is null or undefined
+    const priceString = String(poojaPrice || 0); 
+    
+    const basePrice = parseFloat(priceString.replace(/[^0-9.]/g, ""));
 
   const handleToggleItem = (item) => {
     setSelectedItems((prev) => {
