@@ -162,7 +162,7 @@ debugger
                       className="accent-orange-600"
                     />
                     <label htmlFor={`item-${idx}`} className="text-gray-800">
-                      {item.name} ({item.quantity}) – ₹{item.price}
+                      {item.name} ({item.quantity} {item.units ? `*`  : ""}  {item.units}) – ₹{item.price}
                     </label>
                   </li>
                 ))}
