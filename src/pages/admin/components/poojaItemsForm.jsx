@@ -318,6 +318,7 @@ const PoojaItemsForm = ({ pooja, onClose }) => {
   const [poojaItems, setPoojaItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false); // new spinner for save/delete
+  const [seletedIemPrice, setSelectedItemPrice] = useState(false); 
 
   useEffect(() => {
     if (pooja?.id) {
@@ -335,6 +336,7 @@ const PoojaItemsForm = ({ pooja, onClose }) => {
       const formattedPoojaItems = poojaItemsData.map((item) => ({
         ...item,
         isExisting: true,
+        default_price: item.price/ item.quantity
       }));
       setItemsList(itemsData.items);
       setPoojaItems(formattedPoojaItems);
@@ -354,9 +356,38 @@ const PoojaItemsForm = ({ pooja, onClose }) => {
 
   const handleChange = (index, field, value) => {
     setPoojaItems((prev) =>
-      prev.map((item, i) =>
-        i === index ? { ...item, [field]: value } : item
+      prev.map((item, i) =>{
+        // i === index ? { ...item, [field]: value } : item
+        if( i === index){
+          if(field === "quantity"){
+      
+              return { ...item, [field]: value,  ["price"]: item.default_price ? Number(value * item.default_price, 2).toFixed(2) :Number(value * seletedIemPrice, 2).toFixed(2)}
+          }
+          return { ...item, [field]: value }
+        }else{
+          return item
+        }
+      }
       )
+
+    );
+  };
+
+  const habdleItems = (index, field, selctedItemid) => {
+    const selectedItem =  itemsList.find(item => item.id === parseInt(selctedItemid))
+    setSelectedItemPrice(selectedItem.price);
+    setPoojaItems((prev) =>
+      prev.map((item, i) =>{
+        // i === index ? { ...item, [field]: value } : item
+        if( i === index){
+         
+            return { ...item, [field]: selectedItem.id,  price: selectedItem.price, quantity: selectedItem.default_quantity, units:  selectedItem.units }
+          }
+          return item
+       
+      }
+      )
+
     );
   };
 
@@ -389,6 +420,7 @@ const PoojaItemsForm = ({ pooja, onClose }) => {
         item_id: item.item_id,
         quantity: item.quantity,
         price: item.price,
+        units: item.units
       });
       alert("Item saved successfully!");
       fetchItemsAndPoojaData(); // refresh after save
@@ -414,16 +446,21 @@ const PoojaItemsForm = ({ pooja, onClose }) => {
           <div className="w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
         </div>
       )}
-
+ <div className="flex gap-2 iflex-wrap tems-center border p-2 rounded-lg shadow-sm">
+<label  className="border p-2 rounded flex-1 font-bold">Item</label>
+  <label  className="border p-2 rounded w-20 font-bold">Quantity</label>
+  <label  className="border p-2 rounded w-20 font-bold">Units</label>
+  <label  className="border p-2 rounded w-24 font-bold">Price</label>
+ </div>
       {poojaItems.map((item, index) => (
         <div
           key={index}
           className="flex gap-2 items-center border p-2 rounded-lg shadow-sm"
         >
           <select
-            className="border p-2 rounded flex-1"
+            className="border p-2 rounded"
             value={item.item_id || ""}
-            onChange={(e) => handleChange(index, "item_id", e.target.value)}
+            onChange={(e) => habdleItems(index, "item_id", e.target.value)}
           >
             <option value="">Select Item</option>
             {itemsList.map((it) => (
@@ -432,6 +469,7 @@ const PoojaItemsForm = ({ pooja, onClose }) => {
               </option>
             ))}
           </select>
+        
 
           <input
             type="string"
@@ -440,13 +478,21 @@ const PoojaItemsForm = ({ pooja, onClose }) => {
             value={item.quantity}
             onChange={(e) => handleChange(index, "quantity", e.target.value)}
           />
-
+          <input
+            type="string"
+            placeholder="units"
+            className="border p-2 rounded w-20"
+            value={item.units}
+            onChange={(e) => handleChange(index, "units", e.target.value)}
+            disabled
+          />
           <input
             type="number"
             placeholder="Price"
-            className="border p-2 rounded w-24"
+            className="border p-2 rounded w-20"
             value={item.price}
             onChange={(e) => handleChange(index, "price", e.target.value)}
+            disabled
           />
 
           {item.isExisting ? (
