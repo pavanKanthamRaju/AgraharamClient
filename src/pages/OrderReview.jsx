@@ -66,7 +66,7 @@ const OrderReviewPage = () => {
         handler: async function (response) {
           try {
             const verifyRes = await axios.post(
-              "http://localhost:5080/api/payment/verify-payment",
+             `${process.env.REACT_APP_BASE_URL}/api/payment/verify-payment`,
               {
                 razorpay_order_id: response.razorpay_order_id,
                 razorpay_payment_id: response.razorpay_payment_id,
