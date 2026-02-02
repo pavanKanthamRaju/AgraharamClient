@@ -154,6 +154,8 @@ debugger
               <ul className="space-y-2">
                 {poojaItems.map((item, idx) => (
                   <li key={idx} className="flex items-center gap-2">
+                   <img src={item.image} alt="Item image" />
+
                     <input
                       type="checkbox"
                       id={`item-${idx}`}

@@ -165,6 +165,8 @@ import Modal from "./components/Modal";
 
 const Poojas = () => {
   const [poojas, setPoojas] = useState([]);
+  const [search, setSearch] = useState("");
+  const [filterdPoojas, setFilterdPoojas] = useState([]);
   const [showDialog, setShowDialog] = useState(false);
   const [showPoojaItemDialog, setpoojaItemsDialog] = useState(false);
   const [selectedPooja, setSelectedPooja] = useState(null);
@@ -182,6 +184,7 @@ const Poojas = () => {
         setLoading(true);
         const poojasData = await getPoojas();
         setPoojas(poojasData);
+        setFilterdPoojas(poojasData);
       } catch (err) {
         console.error("Error fetching poojas:", err);
       } finally {
@@ -190,6 +193,15 @@ const Poojas = () => {
     };
     getPoojasData();
   }, []);
+  useEffect(()=>{
+
+    let q =search.toLowerCase();
+    const filterdData = poojas.filter((pooja)=>{
+return pooja.name?.toLowerCase().includes(q);
+    })
+    setFilterdPoojas(filterdData);
+    
+  },[search, poojas])
 
   const handleCreate = () => {
     setSelectedPooja(null);
@@ -245,7 +257,20 @@ const Poojas = () => {
       )}
 
       {/* Header Section */}
+         {/* 🔍 SEARCH + SORT BAR */}
+         <div className="flex flex-col sm:flex-row items-center justify-between mb-4 gap-3">
+        <input
+          type="text"
+          placeholder="Search by Pooja name "
+          className="w-full sm:w-1/3 p-2 border rounded"
+         value={search}
+         onChange={(e)=>setSearch(e.target.value)}
+        />
+
+        
+      </div>
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-8">
+        
         <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 text-center sm:text-left">
           Pooja Management
         </h2>
@@ -259,8 +284,9 @@ const Poojas = () => {
       </div>
 
       {/* Cards Section */}
+
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {poojas.map((pooja) => (
+        {filterdPoojas.map((pooja) => (
           <div
             key={pooja.id}
             className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition duration-300 overflow-hidden border border-gray-100"
@@ -300,7 +326,9 @@ const Poojas = () => {
                 Delete
               </button>
             </div>
-          </div>
+            </div>
+          
+
         ))}
       </div>
 
