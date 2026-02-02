@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   getPoojaItemsByid,
   getAllItems,
@@ -12,13 +12,7 @@ const PoojaItemsForm = ({ pooja, onClose }) => {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false); // new spinner for save/delete 
 
-  useEffect(() => {
-    if (pooja?.id) {
-      fetchItemsAndPoojaData();
-    }
-  }, [pooja]);
-
-  const fetchItemsAndPoojaData = async () => {
+  const fetchItemsAndPoojaData = useCallback(async () => {
     try {
       setLoading(true);
       const [itemsData, poojaItemsData] = await Promise.all([
@@ -37,7 +31,13 @@ const PoojaItemsForm = ({ pooja, onClose }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [pooja?.id]);
+
+  useEffect(() => {
+    if (pooja?.id) {
+      fetchItemsAndPoojaData();
+    }
+  }, [pooja, fetchItemsAndPoojaData]);
 
   const handleAddItem = () => {
     setPoojaItems((prev) => [
@@ -53,7 +53,7 @@ const PoojaItemsForm = ({ pooja, onClose }) => {
         if (i === index) {
           if (field === "quantity") {
             const unitPrice = item.default_price || 0;
-            return { ...item, [field]: value, ["price"]: (value * unitPrice).toFixed(2) }
+            return { ...item, [field]: value, price: (value * unitPrice).toFixed(2) }
           }
           return { ...item, [field]: value }
         } else {
@@ -113,7 +113,7 @@ const PoojaItemsForm = ({ pooja, onClose }) => {
   const handleSave = async (item) => {
     try {
       setSaving(true);
-      const poojaItem = await addPoojaItem({
+      await addPoojaItem({
         pooja_id: pooja.id,
         item_id: item.item_id,
         quantity: item.quantity,

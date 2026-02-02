@@ -26,23 +26,23 @@ const CreatePoojaForm = ({ pooja, onClose, onSave }) => {
 
   const handleChange = (e) => {
 
-    const { name, value, files } = e.target;
+    const { name, value } = e.target;
     if (name === "image") {
-     
+
       // const file = files[0];
       // setFormData((prev) => ({ ...prev, image: file }));
       // setPreview(URL.createObjectURL(file));
-      setFormData((prev) => ({ ...prev, [name]:  e.target.files[0] }));
+      setFormData((prev) => ({ ...prev, [name]: e.target.files[0] }));
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
     }
   };
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     let imageUrl = formData.image;
-  
+
     // Upload image if it's a file (new upload)
     if (formData.image && formData.image instanceof File) {
       try {
@@ -52,15 +52,15 @@ const CreatePoojaForm = ({ pooja, onClose, onSave }) => {
         return; // stop submission
       }
     }
-  
+
     // Prepare data to send to parent
     const poojaData = {
       ...formData,
       image: imageUrl ? imageUrl : preview
     };
-  
+
     onSave(poojaData); // ✅ call parent callback
-  
+
   };
 
   return (
@@ -152,11 +152,10 @@ const CreatePoojaForm = ({ pooja, onClose, onSave }) => {
             </label>
 
             <div
-              className={`relative border-2 border-dashed rounded-xl p-4 flex flex-col items-center justify-center transition ${
-                preview
+              className={`relative border-2 border-dashed rounded-xl p-4 flex flex-col items-center justify-center transition ${preview
                   ? "border-blue-500 bg-blue-50"
                   : "border-gray-300 hover:border-blue-400"
-              }`}
+                }`}
             >
               {preview ? (
                 <div className="w-full text-center">

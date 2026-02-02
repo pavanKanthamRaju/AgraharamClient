@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getPoojaById, getPoojaItemsByid } from "../api/dashboardsApi";
-import {useAppContext} from "../context/appContext"
+import { useAppContext } from "../context/appContext"
 
 const PoojaDetailsPage = () => {
   const { id } = useParams();
@@ -10,12 +10,12 @@ const PoojaDetailsPage = () => {
   const [selectedItems, setSelectedItems] = useState([]);
   const [poojaItems, setPoojaItems] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
-  const {orderData, setOrderData, setPoojsSelectedItems} = useAppContext();
+  const { orderData, setOrderData, setPoojsSelectedItems } = useAppContext();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-debugger
+        debugger
         const poojaData = await getPoojaById(Number(id));
         setPooja(poojaData);
 
@@ -35,12 +35,12 @@ debugger
     }
   }, [orderData]);
 
-    const poojaPrice = pooja?.base_price;
+  const poojaPrice = pooja?.base_price;
 
-    // Use a fallback value (like 0) if basePrice is null or undefined
-    const priceString = String(poojaPrice || 0); 
-    
-    const basePrice = parseFloat(priceString.replace(/[^0-9.]/g, ""));
+  // Use a fallback value (like 0) if basePrice is null or undefined
+  const priceString = String(poojaPrice || 0);
+
+  const basePrice = parseFloat(priceString.replace(/[^0-9.]/g, ""));
 
   const handleToggleItem = (item) => {
     setSelectedItems((prev) => {
@@ -71,21 +71,21 @@ debugger
     return selectedItems.reduce((total, item) => {
       // Use parseFloat to convert the item.price string into a number
       const priceAsNumber = parseFloat(item.price);
-      
+
       // Check if the conversion resulted in a valid number (not NaN)
       if (!isNaN(priceAsNumber)) {
         return total + priceAsNumber;
       }
-      
+
       // If the price is invalid, just return the current total
       return total;
     }, 0);
   };
-  
+
 
   const handleCheckout = () => {
     const data = {
-      poojaId:pooja.id,
+      poojaId: pooja.id,
       poojaName: pooja.name,
       description: pooja.description,
       price: pooja.base_price,
@@ -154,7 +154,7 @@ debugger
               <ul className="space-y-2">
                 {poojaItems.map((item, idx) => (
                   <li key={idx} className="flex items-center gap-2">
-                   <img src={item.image} alt="Item image" />
+                    <img src={item.image} alt="Item" />
 
                     <input
                       type="checkbox"
@@ -164,7 +164,7 @@ debugger
                       className="accent-orange-600"
                     />
                     <label htmlFor={`item-${idx}`} className="text-gray-800">
-                      {item.name} ({item.quantity} {item.units ? `*`  : ""}  {item.units}) – ₹{item.price}
+                      {item.name} ({item.quantity} {item.units ? `*` : ""}  {item.units}) – ₹{item.price}
                     </label>
                   </li>
                 ))}
