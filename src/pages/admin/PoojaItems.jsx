@@ -9,25 +9,27 @@ const PoojaItems = () => {
   const [editingItem, setEditingItem] = useState(null);
   const [showForm, setShowForm] = useState(false);
 
-  useEffect(() => {
-    fetchPoojas();
-    fetchItems();
-  }, []);
 
-  const fetchPoojas = async () => {
+
+  const fetchPoojas = React.useCallback(async () => {
     const res = await fetch(`${base_path}/api/poojas`);
     const data = await res.json();
     setPoojas(data);
-  };
+  }, [base_path]);
 
-  const fetchItems = async (poojaId = "") => {
+  const fetchItems = React.useCallback(async (poojaId = "") => {
     const url = poojaId
       ? `${base_path}/api/items/pooja/${poojaId}`
       : `${base_path}/api/items`;
     const res = await fetch(url);
     const data = await res.json();
     setItems(data);
-  };
+  }, [base_path]);
+
+  useEffect(() => {
+    fetchPoojas();
+    fetchItems();
+  }, [fetchPoojas, fetchItems]);
 
   const handlePoojaChange = (e) => {
     const poojaId = e.target.value;

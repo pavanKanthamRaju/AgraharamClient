@@ -5,21 +5,21 @@ const OrdersPage = () => {
   const [orders, setOrders] = useState([]);
   const storedUser = localStorage.getItem("user");
   const user = storedUser ? JSON.parse(storedUser).user : null;
-const userId = user?.id;
+
   useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const response = await apiClient.get(`/orders/${user.id}`);
+        setOrders(response.data.orders || []);
+      } catch (error) {
+        console.error("Error fetching orders:", error);
+      }
+    };
+
     if (user?.id) {
       fetchOrders();
     }
-  }, [userId]);
-
-  const fetchOrders = async () => {
-    try {
-      const response = await apiClient.get(`/orders/${user.id}`);
-      setOrders(response.data.orders || []);
-    } catch (error) {
-      console.error("Error fetching orders:", error);
-    }
-  };
+  }, [user?.id]);
 
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
@@ -50,11 +50,10 @@ const userId = user?.id;
 
               <div className="mt-4 text-right">
                 <span
-                  className={`px-3 py-1 text-xs font-semibold rounded-full ${
-                    order.payment_status === "success"
-                      ? "bg-green-100 text-green-700"
-                      : "bg-yellow-100 text-yellow-700"
-                  }`}
+                  className={`px-3 py-1 text-xs font-semibold rounded-full ${order.payment_status === "success"
+                    ? "bg-green-100 text-green-700"
+                    : "bg-yellow-100 text-yellow-700"
+                    }`}
                 >
                   {order.payment_status}
                 </span>
