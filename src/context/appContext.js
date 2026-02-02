@@ -1,4 +1,4 @@
-import React,{ createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState } from "react";
 
 const AppContext = createContext();
 export const AppContextProvider = ({ children }) => {
@@ -12,7 +12,7 @@ export const AppContextProvider = ({ children }) => {
             orderData, setOrderData,
             poojsSelectedItems, setPoojsSelectedItems,
             address, setAddress
-          }}>
+        }}>
             {children}
         </AppContext.Provider>
     )
