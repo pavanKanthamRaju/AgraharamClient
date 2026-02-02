@@ -12,7 +12,6 @@ const ItemForm = ({ onSubmit, onClose, existingItem }) => {
 
   useEffect(() => {
     if (existingItem) {
-      debugger
       setItemName(existingItem.name);
       setDescription(existingItem.description);
       setDefaultQuantity(existingItem.default_quantity);
@@ -92,11 +91,17 @@ const ItemForm = ({ onSubmit, onClose, existingItem }) => {
       </div>
       <div>
         <label className="block font-medium mb-1">Units</label>
-        <input
+        <select
           className="w-full border rounded-lg p-2 focus:ring-2 focus:ring-orange-500"
           value={units}
           onChange={(e) => setUnits(e.target.value)}
-        />
+          required
+        >
+          <option value="">Select Unit</option>
+          <option value="PCS">PCS</option>
+          <option value="GMS">GMS</option>
+          <option value="ML">ML</option>
+        </select>
       </div>
       <div>
         <label className="block font-medium md-1">Upload Item Image</label>
