@@ -2,6 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getPoojaById, getPoojaItemsByid } from "../api/dashboardsApi";
 import { useAppContext } from "../context/appContext"
+import PoojaItemsModal from "../components/PoojaItemsModal";
 
 const PoojaDetailsPage = () => {
   const { id } = useParams();
@@ -9,13 +10,14 @@ const PoojaDetailsPage = () => {
   const [pooja, setPooja] = useState(null);
   const [selectedItems, setSelectedItems] = useState([]);
   const [poojaItems, setPoojaItems] = useState([]);
-  const [selectAll, setSelectAll] = useState(false);
+
   const { orderData, setOrderData, setPoojsSelectedItems } = useAppContext();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        debugger
+
         const poojaData = await getPoojaById(Number(id));
         setPooja(poojaData);
 
@@ -42,30 +44,16 @@ const PoojaDetailsPage = () => {
 
   const basePrice = parseFloat(priceString.replace(/[^0-9.]/g, ""));
 
-  const handleToggleItem = (item) => {
-    setSelectedItems((prev) => {
-      const exists = prev.some((i) => i.name === item.name);
-      const updated = exists
-        ? prev.filter((i) => i.name !== item.name)
-        : [...prev, item];
-      setSelectAll(updated.length === poojaItems.length);
-      return updated;
-    });
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
   };
 
-  const handleSelectAll = () => {
-    if (selectAll) {
-      setSelectedItems([]);
-      setSelectAll(false);
-    } else {
-      setSelectedItems(poojaItems);
-      setSelectAll(true);
-    }
+  const handleConfirmSelection = (items) => {
+    setSelectedItems(items);
+    setIsModalOpen(false);
   };
 
-  // const getItemTotal = () => {
-  //   return selectedItems.reduce((total, item) => total + item.price, 0);
-  // };
+
 
   const getItemTotal = () => {
     return selectedItems.reduce((total, item) => {
@@ -97,7 +85,7 @@ const PoojaDetailsPage = () => {
     setPoojsSelectedItems(selectedItems);
     navigate("/order-review");
   };
-  debugger
+
   const itemsPrice = selectedItems.reduce((sum, item) => sum + Number(item.price), 0);
   const totalPrice = basePrice + itemsPrice;
 
@@ -132,44 +120,52 @@ const PoojaDetailsPage = () => {
               {pooja.description}
             </p>
 
-            {/* Items with Select All */}
-            <div className="mb-4">
-              <h3 className="text-lg font-semibold text-orange-700 mb-2">Required Items:</h3>
-
-              {/* Select All */}
-              <div className="flex items-center mb-2">
-                <input
-                  type="checkbox"
-                  id="select-all"
-                  checked={selectAll}
-                  onChange={handleSelectAll}
-                  className="accent-orange-600 mr-2"
-                />
-                <label htmlFor="select-all" className="text-gray-900 font-medium">
-                  Select All
-                </label>
+            {/* Items Selection */}
+            <div className="mb-6">
+              <div className="flex justify-between items-center mb-2">
+                <h3 className="text-lg font-semibold text-orange-700">Add Pooja Items (Optional):</h3>
               </div>
 
-              {/* Item List */}
-              <ul className="space-y-2">
-                {poojaItems.map((item, idx) => (
-                  <li key={idx} className="flex items-center gap-2">
-                    <img src={item.image} alt="Item" />
+              <div className="bg-orange-50 rounded-lg p-4 border border-orange-100">
+                {selectedItems.length > 0 ? (
+                  <div className="mb-3">
+                    <p className="text-sm text-gray-600 mb-2">Selected Items:</p>
+                    <div className="flex flex-wrap gap-2">
+                      {selectedItems.map((item, idx) => (
+                        <span key={idx} className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-white text-orange-800 border border-orange-200 shadow-sm">
+                          {item.name}
+                        </span>
+                      ))}
+                      {selectedItems.length > 3 && (
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-800">
+                          + more
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                ) : (
+                  <p className="text-gray-500 text-sm mb-3">No extra items selected.</p>
+                )}
 
-                    <input
-                      type="checkbox"
-                      id={`item-${idx}`}
-                      checked={selectedItems.some((i) => i.name === item.name)}
-                      onChange={() => handleToggleItem(item)}
-                      className="accent-orange-600"
-                    />
-                    <label htmlFor={`item-${idx}`} className="text-gray-800">
-                      {item.name} ({item.quantity} {item.units ? `*` : ""}  {item.units}) – ₹{item.price}
-                    </label>
-                  </li>
-                ))}
-              </ul>
+                <button
+                  onClick={handleOpenModal}
+                  className="w-full sm:w-auto bg-white border border-orange-300 text-orange-700 hover:bg-orange-50 hover:text-orange-800 font-medium py-2 px-4 rounded-md transition shadow-sm flex items-center justify-center gap-2"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                  </svg>
+                  {selectedItems.length > 0 ? "Edit Pooja Items" : "Add Pooja Items"}
+                </button>
+              </div>
             </div>
+
+            <PoojaItemsModal
+              isOpen={isModalOpen}
+              onClose={() => setIsModalOpen(false)}
+              onConfirm={handleConfirmSelection}
+              items={poojaItems}
+              initialSelectedItems={selectedItems}
+            />
           </div>
 
           {/* Total */}
