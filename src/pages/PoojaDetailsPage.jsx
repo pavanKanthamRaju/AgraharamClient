@@ -102,11 +102,11 @@ const PoojaDetailsPage = () => {
       <div className="max-w-5xl mx-auto bg-white shadow-md rounded-xl overflow-hidden flex flex-col md:flex-row">
 
         {/* Image */}
-        <div className="sm:w-1/2 h-[75vh]">
+        <div className="md:w-1/2 h-[500px] bg-gray-50">
           <img
             src={pooja.image_url}
             alt={pooja.name}
-            className="h-full w-full object-contains"
+            className="h-full w-full object-cover"
           />
         </div>
 

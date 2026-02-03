@@ -18,7 +18,7 @@ const PoojaCard = ({ pooja }) => {
   const navigate = useNavigate();
 
   return (
-    <div className="bg-[#fff7ed] border border-orange-100 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition">
+    <div className="bg-[#fff7ed] border border-orange-100 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition flex flex-col h-full">
       <div className="relative">
         <img
           src={pooja.image_url}
@@ -29,9 +29,9 @@ const PoojaCard = ({ pooja }) => {
           ₹{pooja.base_price}
         </span>
       </div>
-      <div className="p-4">
+      <div className="p-4 flex flex-col flex-grow">
         <h3 className="text-lg font-semibold text-gray-900">{pooja.name}</h3>
-        <p className="text-sm text-gray-600 mt-1">{pooja.description}</p>
+        <p className="text-sm text-gray-600 mt-1 line-clamp-2 min-h-[40px]">{pooja.description}</p>
         <div className="flex items-center text-orange-600 mt-3 text-sm">
           <svg
             className="w-4 h-4 mr-1 text-orange-500"
@@ -43,7 +43,7 @@ const PoojaCard = ({ pooja }) => {
           {pooja.duration}
         </div>
         <button
-          className="mt-4 w-full bg-gradient-to-r from-orange-500 to-red-500 text-white py-2 rounded-lg text-sm font-medium hover:opacity-90 transition"
+          className="mt-auto w-full bg-gradient-to-r from-orange-500 to-red-500 text-white py-2 rounded-lg text-sm font-medium hover:opacity-90 transition"
           onClick={() => navigate(`/pooja/${pooja.id}`)}
         >
           Book Pooja
@@ -100,8 +100,8 @@ const DashboardPage = () => {
 
   // Separate announcement types
   const bannerAnnouncement = announcements.find(a => a.name === "Scrolling Banner");
-  const popupAnnouncementHeaderText= announcements.find(a => a.name === "Header text");
-  const popupAnnouncementHeading= announcements.find(a => a.name === "Header Heading ");
+  const popupAnnouncementHeaderText = announcements.find(a => a.name === "Header text");
+  const popupAnnouncementHeading = announcements.find(a => a.name === "Header Heading ");
   const popupAnnouncementSubHeading = announcements.find(a => a.name === "Header Sub Heading");
   debugger
 
@@ -110,8 +110,8 @@ const DashboardPage = () => {
       {/* 🔸 Scrolling Banner */}
       {bannerAnnouncement && (
         <div className="mt-2 text-orange-800 overflow-hidden whitespace-nowrap relative">
-               <style>
-        {`
+          <style>
+            {`
           @keyframes marquee {
             0% {
               transform: translateX(100%);
@@ -129,7 +129,7 @@ const DashboardPage = () => {
             animation-play-state: paused; /* optional: pause on hover */
           }
         `}
-      </style>
+          </style>
           <div className="animate-marquee-slow { inline-block">
             {bannerAnnouncement.description}
           </div>
@@ -144,7 +144,7 @@ const DashboardPage = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
-         
+
 
           <h2 className="text-2xl font-bold text-white mb-2"> {popupAnnouncementHeaderText.description}</h2> <p className="text-white text-sm"> {popupAnnouncementHeading.description} <br /> {popupAnnouncementSubHeading.description} </p>
         </motion.div>
