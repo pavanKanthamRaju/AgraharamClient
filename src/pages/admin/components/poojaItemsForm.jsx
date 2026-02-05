@@ -144,73 +144,90 @@ const PoojaItemsForm = ({ pooja, onClose }) => {
           <div className="w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
         </div>
       )}
-      <div className="flex gap-2 iflex-wrap tems-center border p-2 rounded-lg shadow-sm">
-        <label className="border p-2 rounded flex-1 font-bold">Item</label>
-        <label className="border p-2 rounded w-20 font-bold">Quantity</label>
-        <label className="border p-2 rounded w-20 font-bold">Units</label>
-        <label className="border p-2 rounded w-24 font-bold">Price</label>
+      <div className="hidden sm:grid grid-cols-12 gap-4 items-center border p-2 rounded-lg shadow-sm bg-gray-100 font-bold text-sm">
+        <label className="col-span-4">Item</label>
+        <label className="col-span-2">Quantity</label>
+        <label className="col-span-2">Units</label>
+        <label className="col-span-2">Price</label>
+        <label className="col-span-2 text-center">Actions</label>
       </div>
+
       {poojaItems.map((item, index) => (
         <div
           key={index}
-          className="flex gap-2 items-center border p-2 rounded-lg shadow-sm"
+          className="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center border p-4 sm:p-2 rounded-lg shadow-sm mt-2"
         >
-          <select
-            className="border p-2 rounded"
-            value={item.item_id || ""}
-            onChange={(e) => handleItems(index, "item_id", e.target.value)}
-          >
-            <option value="">Select Item</option>
-            {itemsList.map((it) => (
-              <option key={it.id} value={it.id}>
-                {it.name}
-              </option>
-            ))}
-          </select>
-
-
-          <input
-            type="string"
-            placeholder="Qty"
-            className="border p-2 rounded w-20"
-            value={item.quantity}
-            onChange={(e) => handleChange(index, "quantity", e.target.value)}
-          />
-          <input
-            type="string"
-            placeholder="units"
-            className="border p-2 rounded w-20"
-            value={item.units}
-            onChange={(e) => handleChange(index, "units", e.target.value)}
-            disabled
-          />
-          <input
-            type="number"
-            placeholder="Price"
-            className="border p-2 rounded w-20"
-            value={item.price}
-            onChange={(e) => handleChange(index, "price", e.target.value)}
-            disabled
-          />
-
-          {item.isExisting ? (
-            <button
-              className="bg-red-500 hover:bg-red-600 text-white p-2 rounded"
-              onClick={() => handleDeleteItem(index, item)}
+          {/* Mobile Label */}
+          <span className="sm:hidden font-bold">Item:</span>
+          <div className="col-span-1 sm:col-span-4">
+            <select
+              className="border p-2 rounded w-full"
+              value={item.item_id || ""}
+              onChange={(e) => handleItems(index, "item_id", e.target.value)}
             >
-              Delete
-            </button>
-          ) : (
-            <button
-              className="bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded"
-              onClick={() => handleSave(item)}
-            >
-              Save
-            </button>
-          )}
+              <option value="">Select Item</option>
+              {itemsList.map((it) => (
+                <option key={it.id} value={it.id}>
+                  {it.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <span className="sm:hidden font-bold">Quantity:</span>
+          <div className="col-span-1 sm:col-span-2">
+            <input
+              type="string"
+              placeholder="Qty"
+              className="border p-2 rounded w-full"
+              value={item.quantity}
+              onChange={(e) => handleChange(index, "quantity", e.target.value)}
+            />
+          </div>
+
+          <span className="sm:hidden font-bold">Units:</span>
+          <div className="col-span-1 sm:col-span-2">
+            <input
+              type="string"
+              placeholder="Units"
+              className="border p-2 rounded w-full"
+              value={item.units}
+              onChange={(e) => handleChange(index, "units", e.target.value)}
+              disabled
+            />
+          </div>
+
+          <span className="sm:hidden font-bold">Price:</span>
+          <div className="col-span-1 sm:col-span-2">
+            <input
+              type="number"
+              placeholder="Price"
+              className="border p-2 rounded w-full"
+              value={item.price}
+              onChange={(e) => handleChange(index, "price", e.target.value)}
+              disabled
+            />
+          </div>
+
+          <div className="col-span-1 sm:col-span-2 flex justify-center mt-2 sm:mt-0">
+            {item.isExisting ? (
+              <button
+                className="bg-red-500 hover:bg-red-600 text-white p-2 rounded w-full sm:w-auto"
+                onClick={() => handleDeleteItem(index, item)}
+              >
+                Delete
+              </button>
+            ) : (
+              <button
+                className="bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded w-full sm:w-auto"
+                onClick={() => handleSave(item)}
+              >
+                Save
+              </button>
+            )}
+          </div>
         </div>
       ))}
-
       <div className="flex justify-between items-center mt-4 sticky bottom-0 left-0 bg-white">
         <div className="flex gap-2">
           <button

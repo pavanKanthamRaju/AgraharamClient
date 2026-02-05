@@ -156,10 +156,10 @@ const ItemsPaage = () => {
       setLoading(true);
       const res = await getAllItems();
       const data = res.items;
-          // Sort alphabetically every time data is fetched
-    const sortedData = [...data].sort((a, b) => 
-    a.name?.localeCompare(b.name)  // change 'name' to your property
-  );
+      // Sort alphabetically every time data is fetched
+      const sortedData = [...data].sort((a, b) =>
+        a.name?.localeCompare(b.name)  // change 'name' to your property
+      );
       setItems(sortedData);
       setFilterdItems(sortedData);
     } catch (error) {
@@ -173,16 +173,16 @@ const ItemsPaage = () => {
     fetchItems();
   }, []);
 
-  useEffect(()=>{
+  useEffect(() => {
     const searchString = search.toLowerCase();
     const fiterdData = items.filter((item) =>
-    item.name.toLowerCase().includes(searchString)  
-    ) 
-    const sortedData = [...fiterdData].sort((a, b) => 
-    a.name?.localeCompare(b.name)  // change 'name' to your property
-  );
+      item.name.toLowerCase().includes(searchString)
+    )
+    const sortedData = [...fiterdData].sort((a, b) =>
+      a.name?.localeCompare(b.name)  // change 'name' to your property
+    );
     setFilterdItems(sortedData);
-  },[items, search])
+  }, [items, search])
 
   // ✅ Create or Update item
   const handleSubmit = async (itemData) => {
@@ -200,7 +200,7 @@ const ItemsPaage = () => {
     } catch (error) {
       alert(error.message)
       console.error("Error saving item:", error);
-   
+
     } finally {
       setLoading(false);
     }
@@ -256,22 +256,22 @@ const ItemsPaage = () => {
           Manage Items
         </h1>
         <div className="flex gap-3">
-        <button 
-         className="w-full sm:w-auto bg-yellow-500 hover:bg-yellow-600 text-white px-5 py-2 rounded-lg font-semibold shadow-md active:scale-95 transition"
-         onClick={handleDownloadExcel}>
-  <FiDownload className="w-4 h-4 inline mr-1" />
-        Download Items as Excel
-      </button>
+          <button
+            className="w-full sm:w-auto bg-yellow-500 hover:bg-yellow-600 text-white px-5 py-2 rounded-lg font-semibold shadow-md active:scale-95 transition"
+            onClick={handleDownloadExcel}>
+            <FiDownload className="w-4 h-4 inline mr-1" />
+            Download Items as Excel
+          </button>
 
-        <button
-          onClick={() => {
-            setSelectedItem(null);
-            setIsModalOpen(true);
-          }}
-          className="w-full sm:w-auto bg-orange-500 hover:bg-orange-600 text-white px-5 py-2 rounded-lg font-semibold shadow-md active:scale-95 transition"
-        >
-          + Create Item
-        </button>
+          <button
+            onClick={() => {
+              setSelectedItem(null);
+              setIsModalOpen(true);
+            }}
+            className="w-full sm:w-auto bg-orange-500 hover:bg-orange-600 text-white px-5 py-2 rounded-lg font-semibold shadow-md active:scale-95 transition"
+          >
+            + Create Item
+          </button>
         </div>
       </div>
       {/* 🔍 SEARCH + SORT BAR */}
@@ -280,18 +280,18 @@ const ItemsPaage = () => {
           type="text"
           placeholder="Search by Item name "
           className="w-full sm:w-1/3 p-2 border rounded"
-       value={search}
-       onChange={(e)=>setSearch(e.target.value)}
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
         />
 
-        
+
       </div>
       {/* Cards Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {fiterdItems.map((item) => (
           <div
             key={item.id}
-            className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition duration-300 overflow-hidden border border-gray-100"
+            className="flex flex-col h-full bg-white rounded-xl shadow-lg hover:shadow-2xl transition duration-300 overflow-hidden border border-gray-100"
           >
             {/* Card Header */}
             <div className="flex justify-between items-center px-4 py-3 bg-gradient-to-r from-orange-300 to-orange-400 border-b">
@@ -306,7 +306,7 @@ const ItemsPaage = () => {
             </div>
 
             {/* Card Body */}
-            <div className="p-4">
+            <div className="p-4 flex-grow">
               <p className="text-gray-600 text-sm leading-relaxed">
                 {item.description || "No description provided."}
               </p>
