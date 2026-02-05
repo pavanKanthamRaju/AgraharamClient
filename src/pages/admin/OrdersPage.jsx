@@ -96,7 +96,7 @@ const OrdersPage = () => {
 
   // 🔍 FILTER LOGIC
   useEffect(() => {
-    const searchTerm = q.toLowerCase();
+    const searchTerm = search.toLowerCase();
 
     const filtered = orders.filter((order) => {
       return (
