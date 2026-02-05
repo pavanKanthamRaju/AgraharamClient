@@ -96,17 +96,21 @@ const OrdersPage = () => {
 
   // 🔍 FILTER LOGIC
   useEffect(() => {
-    const q = search.toLowerCase();
+    const searchTerm = q.toLowerCase();
 
-    const filtered = orders.filter((order) =>
-      order.order_id?.toString().includes(q) ||
-      order.user_name?.toLowerCase().includes(q) ||
-      order.pooja_name?.toLowerCase().includes(q) ||
-      order.phone_number?.toLowerCase().includes(q) ||
-      order.address?.toLowerCase().includes(q)||
-      order.total_amount.toLowerCase().includes(q) ||
-      new Date(order.created_at).toLocaleString().toLowerCase().includes(q)
-    );
+    const filtered = orders.filter((order) => {
+      return (
+        order.order_id?.toString().includes(searchTerm) ||
+        order.user_name?.toLowerCase().includes(searchTerm) ||
+        order.pooja_name?.toLowerCase().includes(searchTerm) ||
+        order.phone_number?.toLowerCase().includes(searchTerm) ||
+        order.address?.toLowerCase().includes(searchTerm) ||
+        // 2. Convert number to string before lowercasing
+        order.total_amount?.toString().toLowerCase().includes(searchTerm) ||
+        // 3. Date check
+        new Date(order.created_at).toLocaleString().toLowerCase().includes(searchTerm)
+      );
+    });
 
     setFilteredOrders(filtered);
   }, [search, orders]);
