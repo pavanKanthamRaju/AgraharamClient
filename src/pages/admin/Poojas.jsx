@@ -13,7 +13,7 @@
 //   const [isModalOpen, setIsModalOpen] = useState(false);
 
 //   const closeModal = () => {
-  
+
 //     setIsModalOpen(false);
 //        setSelectedPooja(null);
 //   };
@@ -119,7 +119,7 @@
 //               <button
 //     className="w-full sm:w-auto overflow-hidden px-4 py-2 rounded-md bg-orange-500 text-white text-sm font-medium shadow-sm hover:bg-orange-600 active:scale-95 transition"
 //     onClick={() => handlePoojaItems(pooja)}
-    
+
 //   >
 //     Update Pooja Items
 //   </button>
@@ -150,7 +150,7 @@
 //     >
 //       <PoojaItemsForm pooja={selectedPooja} onClose={closeModal} />
 //     </Modal>
-      
+
 //       )}
 //     </div>
 //   );
@@ -193,15 +193,15 @@ const Poojas = () => {
     };
     getPoojasData();
   }, []);
-  useEffect(()=>{
+  useEffect(() => {
 
-    let q =search.toLowerCase();
-    const filterdData = poojas.filter((pooja)=>{
-return pooja.name?.toLowerCase().includes(q);
+    let q = search.toLowerCase();
+    const filterdData = poojas.filter((pooja) => {
+      return pooja.name?.toLowerCase().includes(q);
     })
     setFilterdPoojas(filterdData);
-    
-  },[search, poojas])
+
+  }, [search, poojas])
 
   const handleCreate = () => {
     setSelectedPooja(null);
@@ -257,20 +257,20 @@ return pooja.name?.toLowerCase().includes(q);
       )}
 
       {/* Header Section */}
-         {/* 🔍 SEARCH + SORT BAR */}
-         <div className="flex flex-col sm:flex-row items-center justify-between mb-4 gap-3">
+      {/* 🔍 SEARCH + SORT BAR */}
+      <div className="flex flex-col sm:flex-row items-center justify-between mb-4 gap-3">
         <input
           type="text"
           placeholder="Search by Pooja name "
           className="w-full sm:w-1/3 p-2 border rounded"
-         value={search}
-         onChange={(e)=>setSearch(e.target.value)}
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
         />
 
-        
+
       </div>
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-8">
-        
+
         <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 text-center sm:text-left">
           Pooja Management
         </h2>
@@ -285,11 +285,11 @@ return pooja.name?.toLowerCase().includes(q);
 
       {/* Cards Section */}
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filterdPoojas.map((pooja) => (
           <div
             key={pooja.id}
-            className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition duration-300 overflow-hidden border border-gray-100"
+            className="flex flex-col h-full bg-white rounded-xl shadow-lg hover:shadow-2xl transition duration-300 overflow-hidden border border-gray-100"
           >
             <div className="flex justify-between items-center px-4 py-3 bg-gradient-to-r from-orange-300 to-orange-400 border-b">
               <h3 className="text-lg font-semibold text-gray-800">
@@ -300,13 +300,13 @@ return pooja.name?.toLowerCase().includes(q);
               </span>
             </div>
 
-            <div className="p-4">
+            <div className="p-4 flex-grow">
               <p className="text-gray-600 text-sm leading-relaxed">
                 {pooja.description || "No description provided."}
               </p>
             </div>
 
-            <div className="flex justify-between flex-col sm:flex-row items-center gap-2 px-4 py-3 border-t bg-gray-700">
+            <div className="flex flex-col sm:flex-row justify-between items-center gap-2 px-4 py-3 border-t bg-gray-700">
               <button
                 onClick={() => handleEdit(pooja)}
                 className="w-full sm:w-auto px-4 py-2 rounded-md bg-blue-500 text-white text-sm font-medium shadow-sm hover:bg-blue-600 active:scale-95 transition"
@@ -314,10 +314,10 @@ return pooja.name?.toLowerCase().includes(q);
                 Edit
               </button>
               <button
-                className="w-full sm:w-auto px-4 py-2 rounded-md bg-orange-500 text-white text-sm font-medium shadow-sm hover:bg-orange-600 active:scale-95 transition"
+                className="w-full sm:w-auto px-4 py-2 rounded-md bg-orange-500 text-white text-sm font-medium shadow-sm hover:bg-orange-600 active:scale-95 transition text-center"
                 onClick={() => handlePoojaItems(pooja)}
               >
-                Update Pooja Items
+                Update items
               </button>
               <button
                 onClick={() => console.log("Delete", pooja.id)}
@@ -326,8 +326,8 @@ return pooja.name?.toLowerCase().includes(q);
                 Delete
               </button>
             </div>
-            </div>
-          
+          </div>
+
 
         ))}
       </div>
@@ -344,9 +344,8 @@ return pooja.name?.toLowerCase().includes(q);
         <Modal
           isOpen={isModalOpen}
           onClose={closeModal}
-          title={`Update Pooja Items - ${
-            selectedPooja ? selectedPooja.name : ""
-          }`}
+          title={`Update Pooja Items - ${selectedPooja ? selectedPooja.name : ""
+            }`}
         >
           <PoojaItemsForm pooja={selectedPooja} onClose={closeModal} />
         </Modal>
