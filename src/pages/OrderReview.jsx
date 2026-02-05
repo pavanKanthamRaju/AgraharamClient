@@ -66,7 +66,7 @@ const OrderReviewPage = () => {
         handler: async function (response) {
           try {
             const verifyRes = await axios.post(
-             `${process.env.REACT_APP_BACKUP_URL}/api/payment/verify-payment`,
+              `${process.env.REACT_APP_BASE_URL}/api/payment/verify-payment`,
               {
                 razorpay_order_id: response.razorpay_order_id,
                 razorpay_payment_id: response.razorpay_payment_id,
@@ -112,11 +112,11 @@ const OrderReviewPage = () => {
       </div>
     );
   }
-  
+
   const getMinDate = () => {
     // 1. Get today's date
     const today = new Date();
-    
+
     // 2. Add two days (2 days * 24 hours/day * 60 min/hour * 60 sec/min * 1000 ms/sec)
     //    We use setDate to reliably add days across month boundaries.
     today.setDate(today.getDate() + 2);
@@ -222,15 +222,15 @@ const OrderReviewPage = () => {
               className="w-full border rounded-md p-2"
             /> */}
             <input
-        id="pooja-date"
-        type="date"
-        value={poojaDate}
-        onChange={(e) => setPoojaDate(e.target.value)}
-        className="w-full border rounded-md p-2"
-        // --- KEY FIX: Set the minimum date dynamically ---
-        min={getMinDate()}
-      />
-<p className="mt-2 text-sm text-green-600">(Must be selected after two days from today)</p>
+              id="pooja-date"
+              type="date"
+              value={poojaDate}
+              onChange={(e) => setPoojaDate(e.target.value)}
+              className="w-full border rounded-md p-2"
+              // --- KEY FIX: Set the minimum date dynamically ---
+              min={getMinDate()}
+            />
+            <p className="mt-2 text-sm text-green-600">(Must be selected after two days from today)</p>
 
           </div>
 
